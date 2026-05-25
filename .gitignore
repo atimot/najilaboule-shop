@@ -1,8 +1,15 @@
-# Shopify CLI
+# Shopify CLI / dev
 .shopify/
+.preview-screenshots/
 node_modules/
 .env
 .env.*
+
+# Browser automation artifacts (Playwright / Claude verification)
+.playwright-mcp/
+
+# Verification screenshots at repo root (theme assets/*.png stay tracked)
+/*.png
 
 # OS
 .DS_Store
