@@ -11,11 +11,11 @@
 
 | テーマ | ID | 状態 | 対応ブランチ |
 |---|---|---|---|
-| Horizon | 145592877107 | **公開中 (MAIN)** | `horizon` |
-| najilaboule-shop/main | 143376744499 | 未公開 (旧 Dawn ベース)。GitHub 連携で `main` に直結したまま | `main` (連携解除まで触らない) |
+| Horizon | 145592877107 | **公開中 (MAIN)** | `main` |
+| najilaboule-shop/main | 143376744499 | 未公開 (旧 Dawn ベース)。GitHub 連携は 2026-09-12 に解除済み。削除候補 | なし |
 | Dawn | 143036547123 | 未公開。旧。削除候補 | なし |
 
-公開中テーマは `horizon` ブランチの内容。`main` は旧テーマの GitHub 連携に繋がったままなので、管理画面で連携を解除してから `horizon` を `main` に差し替える。テーマエディタで変更したら `shopify theme pull` で `horizon` に取り込む。
+公開中テーマ (Horizon) の内容 = `main` ブランチ。GitHub 連携は使っておらず、反映は Shopify CLI の `push` / `pull` で行う。テーマエディタで変更したら `shopify theme pull` で `main` に取り込んでコミットする。
 
 ## デザイン決め事
 
