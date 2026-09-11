@@ -19,3 +19,5 @@
 - ローカルプレビュー: `shopify theme dev --store najilaboule.myshopify.com` (http://127.0.0.1:9292)
 - 開発テーマは自動で作成され、Live の Dawn テーマには影響しない (Shopify は7日後に自動削除)
 - 公開中テーマへ直接 push しない。`--unpublished` フラグや明示的なテーマID指定で安全運用
+- ストアの永続ドメインは `vuvwb5-6g.myshopify.com` (`najilaboule.myshopify.com` はプライマリドメインの別名)。`shopify store auth` / `shopify store execute` は永続ドメインでないと失敗する。`.claude/settings.json` の `env.SHOPIFY_FLAG_STORE` で Claude Code の Bash には自動で渡る
+- Shopify Dev MCP (`@shopify/dev-mcp`) は `.mcp.json` に登録済み。初回セッションで承認が必要
