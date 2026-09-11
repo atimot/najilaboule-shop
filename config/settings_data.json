@@ -10,9 +10,9 @@
 {
   "current": {
     "logo_width": 90,
-    "type_header_font": "shippori_mincho_n4",
+    "type_header_font": "zen_old_mincho_n4",
     "heading_scale": 100,
-    "type_body_font": "shippori_mincho_n4",
+    "type_body_font": "zen_old_mincho_n4",
     "body_scale": 100,
     "page_width": 1200,
     "spacing_sections": 0,
@@ -29,7 +29,7 @@
     "buttons_shadow_blur": 5,
     "variant_pills_border_thickness": 1,
     "variant_pills_border_opacity": 55,
-    "variant_pills_radius": 40,
+    "variant_pills_radius": 0,
     "variant_pills_shadow_opacity": 0,
     "variant_pills_shadow_horizontal_offset": 0,
     "variant_pills_shadow_vertical_offset": 4,
@@ -91,7 +91,7 @@
     "popup_border_thickness": 1,
     "popup_border_opacity": 10,
     "popup_corner_radius": 0,
-    "popup_shadow_opacity": 5,
+    "popup_shadow_opacity": 0,
     "popup_shadow_horizontal_offset": 0,
     "popup_shadow_vertical_offset": 4,
     "popup_shadow_blur": 5,
@@ -102,7 +102,7 @@
     "drawer_shadow_vertical_offset": 4,
     "drawer_shadow_blur": 5,
     "badge_position": "bottom left",
-    "badge_corner_radius": 40,
+    "badge_corner_radius": 0,
     "sale_badge_color_scheme": "scheme-4",
     "sold_out_badge_color_scheme": "scheme-3",
     "brand_headline": "",
@@ -155,13 +155,13 @@
       },
       "scheme-2": {
         "settings": {
-          "background": "#f0e8da",
+          "background": "#2a1d1b",
           "background_gradient": "",
-          "text": "#241816",
-          "button": "#241816",
-          "button_label": "#f0e8da",
-          "secondary_button_label": "#241816",
-          "shadow": "#241816"
+          "text": "#f8f8f8",
+          "button": "#c8a67b",
+          "button_label": "#241816",
+          "secondary_button_label": "#f8f8f8",
+          "shadow": "#000000"
         }
       },
       "scheme-3": {
@@ -188,13 +188,13 @@
       },
       "scheme-5": {
         "settings": {
-          "background": "#5a463f",
+          "background": "#1f1513",
           "background_gradient": "",
           "text": "#f8f8f8",
-          "button": "#f8f8f8",
-          "button_label": "#5a463f",
+          "button": "#c8a67b",
+          "button_label": "#241816",
           "secondary_button_label": "#f8f8f8",
-          "shadow": "#241816"
+          "shadow": "#000000"
         }
       }
     }

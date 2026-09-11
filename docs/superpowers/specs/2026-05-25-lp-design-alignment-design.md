@@ -208,3 +208,7 @@ LP の語感（体言止め + 「、」/ 仏語小ラベル / 静的な動詞）
 - 仏語小ラベル用ユーティリティクラス（`text-xs / letter-spacing: 0.3em / color: accent`）
 - 電話番号・営業時間の `tabular-nums`
 - LP の `BrandDots` 装飾要素の再現（第4層、慎重に判断）
+
+### 8.1 追記 (2026-09-11)
+
+LP 側の DESIGN.md が 2026-09-10 に Google design.md 仕様で書き直され、書体も Zen Old Mincho 1 書体に変わった。テーマとの差分を全件洗い出したうえで、**同期するのは `settings_data.json` の設定値 (色スキーム・フォント・角丸 0・影 0) のみ** とし、§8 の第 3 層 (CSS 追加) 以降は追従しないと決定。金塗り CTA は EC の例外として維持する。決定の本文は `CLAUDE.md` の「デザイン決め事」。
