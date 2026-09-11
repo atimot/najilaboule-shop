@@ -226,8 +226,9 @@
   },
   "platform_customizations": {
     "custom_css": [
-      "/* Naji la boule: テーマ設定で届かない分だけ補う (LP DESIGN.md: 字間 0.1em / 行間 2 / 金のホバー / フォーカスリング) */",
-      "body { letter-spacing: 0.1em; font-feature-settings: \"palt\"; --font-paragraph--line-height: 2; --font-h1--letter-spacing: 0.2em; --font-h2--letter-spacing: 0.1em; --font-h3--letter-spacing: 0.1em; --font-h4--letter-spacing: 0.1em; --font-h5--letter-spacing: 0.1em; --font-h6--letter-spacing: 0.1em; --color-primary-button-border: rgba(255, 255, 255, 0.5); --color-primary-button-hover-background: #c8a67b; --color-primary-button-hover-text: #241816; --color-primary-button-hover-border: #c8a67b; --color-secondary-button-hover-background: #f8f8f8; --color-secondary-button-hover-text: #241816; --color-secondary-button-hover-border: #f8f8f8; --hover-transition-duration: 500ms; }",
+      "/* Naji la boule: テーマ設定で届かない分だけ補う (LP DESIGN.md: 字間 0.1em / 行間 2 / 金のホバー / フォーカスリング / 角丸 0) */",
+      "body { letter-spacing: 0.1em; font-feature-settings: \"palt\"; --letter-spacing--body-tight: 0.1em; --letter-spacing--body-normal: 0.1em; --letter-spacing--body-loose: 0.1em; --letter-spacing--heading-tight: 0.1em; --letter-spacing--heading-normal: 0.1em; --letter-spacing--heading-loose: 0.1em; --letter-spacing--display-tight: 0.2em; --letter-spacing--display-normal: 0.2em; --letter-spacing--display-loose: 0.2em; --font-h1--letter-spacing: 0.2em; --font-h2--letter-spacing: 0.1em; --font-h3--letter-spacing: 0.1em; --font-h4--letter-spacing: 0.1em; --font-h5--letter-spacing: 0.1em; --font-h6--letter-spacing: 0.1em; --font-paragraph--line-height: 2; --line-height--body-loose: 2; --color-primary-button-border: rgba(255, 255, 255, 0.5); --color-primary-button-hover-background: #c8a67b; --color-primary-button-hover-text: #241816; --color-primary-button-hover-border: #c8a67b; --color-secondary-button-hover-background: #f8f8f8; --color-secondary-button-hover-text: #241816; --color-secondary-button-hover-border: #f8f8f8; --hover-transition-duration: 500ms; }",
+      ".quick-add__button, .button.quick-add__button { border-radius: 0; }",
       ":focus-visible { outline: 2px solid #c8a67b; outline-offset: 2px; }",
       "a:not(.button):hover { color: #c8a67b; }"
     ]
