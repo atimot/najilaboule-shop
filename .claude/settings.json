@@ -1,5 +1,8 @@
 {
   "enabledPlugins": {
     "shopify-ai-toolkit@claude-plugins-official": true
+  },
+  "env": {
+    "SHOPIFY_FLAG_STORE": "vuvwb5-6g.myshopify.com"
   }
 }
