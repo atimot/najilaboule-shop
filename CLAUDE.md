@@ -5,17 +5,17 @@
 
 - ストア (管理画面ハンドル): `najilaboule` (admin.shopify.com/store/najilaboule)
 - 永続ドメイン: `vuvwb5-6g.myshopify.com` ← CLI 認証・Admin API はこちら (`najilaboule.myshopify.com` は別名。OAuth コールバック不一致でエラーになる)
-- 公開予定日: **2026-10-01**
+- 公開: **2026-09-12 に Horizon を公開済み** (当初予定は 2026-10-01。ストアは引き続きパスワード保護中)
 
-## テーマとブランチの対応 (2026-09-12 時点)
+## テーマとブランチの対応 (2026-09-12 公開後)
 
 | テーマ | ID | 状態 | 対応ブランチ |
 |---|---|---|---|
-| Horizon | 145592877107 | 未公開。**これを育てて 10/1 に公開** | `horizon` |
-| najilaboule-shop/main | 143376744499 | **公開中** (旧 Dawn ベース)。GitHub 連携で `main` に直結 | `main` (触らない) |
+| Horizon | 145592877107 | **公開中 (MAIN)** | `horizon` |
+| najilaboule-shop/main | 143376744499 | 未公開 (旧 Dawn ベース)。GitHub 連携で `main` に直結したまま | `main` (連携解除まで触らない) |
 | Dawn | 143036547123 | 未公開。旧。削除候補 | なし |
 
-`main` を変更すると公開中ストアに即反映される。作業は `horizon` ブランチで行い、公開切替後に `main` の GitHub 連携を解除して `horizon` を `main` に差し替える。
+公開中テーマは `horizon` ブランチの内容。`main` は旧テーマの GitHub 連携に繋がったままなので、管理画面で連携を解除してから `horizon` を `main` に差し替える。テーマエディタで変更したら `shopify theme pull` で `horizon` に取り込む。
 
 ## デザイン決め事
 
@@ -50,4 +50,4 @@
 - 設定を変えたら: `shopify theme push --store vuvwb5-6g.myshopify.com --theme 145592877107 --only config/settings_data.json`
 - テーマエディタで変えたら: `shopify theme pull --store vuvwb5-6g.myshopify.com --theme 145592877107` で取り込んでコミット
 - プレビュー: `shopify theme dev --store vuvwb5-6g.myshopify.com` (http://127.0.0.1:9292) または管理画面のテーマ プレビュー (ストアはパスワード保護中)
-- 公開中テーマへは直接 push しない
+- push 先は公開中テーマ (Horizon) なので、`shopify theme push` の前に必ず `pull` して差分を確認する。`--only` で対象ファイルを絞る
