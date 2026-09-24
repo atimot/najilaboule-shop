@@ -28,7 +28,7 @@
 
 設定できる項目・値・範囲は `config/settings_schema.json` と各セクション / ブロックの `{% schema %}` に定義されている。日本語の表示名は `locales/ja.schema.json`。
 
-**カスタム CSS は書体の 1 ルールだけ** (2026-09-24 決定)。`platform_customizations.custom_css` に `:root` の書体変数 4 つ (`--font-body--family` `--font-subheading--family` `--font-heading--family` `--font-accent--family`) を游明朝に、太さの変数を上書き (`--font-body/subheading/heading/accent/paragraph--weight` = 500、`--font-h1〜h6--weight` = 600) するルールがあり、これ以外は足さない。セクション単位 (テンプレート JSON 内の `custom_css`) も使わない。理由: カスタム CSS はテーマ設定の値を上書きして管理画面の設定が効かなくなる。書体だけは游明朝がライブラリに無いので例外にした。テーマ設定で表現できない見た目は、テーマ設定の範囲で近いものに寄せる。
+**カスタム CSS は使わない** (2026-09-24 決定)。テーマ全体 (`platform_customizations.custom_css`) もセクション単位 (テンプレート JSON 内の `custom_css`) も同じ。理由: テーマ設定の値を上書きして管理画面の設定が効かなくなる。同日に游明朝のため書体だけ例外にしたが、ライブラリの Noto Serif Japanese に切り替えて例外も無くした。テーマ設定で表現できない見た目は、テーマ設定の範囲で近いものに寄せる。
 
 `sections/` `blocks/` `snippets/` `assets/` `layout/` の Liquid / CSS / JS 本体は **編集しない** (Theme Store の更新に追従できなくなるため)。
 
@@ -46,7 +46,7 @@
 
 - ヒーロー (トップ) の見出しとボタンは写真の上なのでパレット参照ではなく白 `#ffffff` を直接指定している
 
-- フォント: **游明朝** (参考サイト 八代目儀兵衛 銀座米料亭と同じ)。Web フォントは読み込まず、カスタム CSS で `"Yu Mincho", YuMincho, "Hiragino Mincho ProN", serif` を指定。Mac・Windows は游明朝、iPhone はヒラギノ明朝、Android は Noto Serif 系で表示される。テーマ設定の書体 4 か所は `serif` のままにしておく (CSS に上書きされるので値に意味は無いが、Web フォントを読み込ませないため)。太さは同じルールで、本文・ボタン・メニューが 500、見出し h1〜h6 が 600 (参考サイトと同じ組み合わせ)。Mac の游明朝体はミディアム (400 でも 500 でもこれ)・デミボールド (600) の 2 段しか実質使えず、Windows は Regular (400・500)・Demibold (600)。500 と 400 の見た目は同じ
+- フォント: **Noto Serif Japanese** (Shopify フォントライブラリ収録の Web フォント。どの端末でも同じ書体)。本文 / 小見出し / アクセント = `noto_serif_japanese_n5` (500)、見出し = `noto_serif_japanese_n6` (600)。h1〜h6 はすべて「見出し」の書体を使う (h5・h6 の既定は小見出しだが、太さを 600 にそろえるため変更。小見出し n5 はカートの価格が使う)。参考サイト (八代目儀兵衛) の「本文ミディアム・見出しデミボールド」の組み合わせに合わせた
 - 字間: 見出し h1〜h6 は「広め」(0.03em)。本文の字間は設定が無いので標準のまま
 - 行間: 本文は「広め」(1.6)
 - 角丸はすべて 0、影なし、カードのホバー効果なし
