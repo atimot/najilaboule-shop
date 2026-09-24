@@ -21,9 +21,14 @@
 
 色の正 (source of truth) は LP リポジトリの `/Users/tomitad/work/najilaboule/DESIGN.md`。
 
-**触ってよいのはテーマ設定だけ** = `config/settings_data.json` の `current` (テーマエディタ「テーマ設定」と同じもの)。
+**触ってよいのは設定データだけ** (どれもテーマエディタが書き込むのと同じ JSON):
 
-**カスタム CSS (`platform_customizations.custom_css`) は使わない** (2026-09-24 決定)。テーマ設定の値を上書きして管理画面の設定が効かなくなるため。テーマ設定で表現できない見た目は、テーマ設定の範囲で近いものに寄せる。
+1. テーマ全体の設定 = `config/settings_data.json` の `current` (テーマエディタの「テーマ設定」)
+2. セクション・ブロック単位の設定 = `templates/*.json` と `sections/*-group.json` (テーマエディタでセクションを選んだときの設定。2026-09-24 に追加)
+
+設定できる項目・値・範囲は `config/settings_schema.json` と各セクション / ブロックの `{% schema %}` に定義されている。日本語の表示名は `locales/ja.schema.json`。
+
+**カスタム CSS は使わない** (2026-09-24 決定)。テーマ全体 (`platform_customizations.custom_css`) もセクション単位 (テンプレート JSON 内の `custom_css`) も同じ。テーマ設定の値を上書きして管理画面の設定が効かなくなるため。テーマ設定で表現できない見た目は、テーマ設定の範囲で近いものに寄せる。
 
 `sections/` `blocks/` `snippets/` `assets/` `layout/` の Liquid / CSS / JS 本体は **編集しない** (Theme Store の更新に追従できなくなるため)。
 
@@ -47,7 +52,7 @@
 
 ## 開発フロー
 
-- 設定を変えたら: `shopify theme push --store vuvwb5-6g.myshopify.com --theme 145592877107 --only config/settings_data.json`
+- 設定を変えたら: `shopify theme push --store vuvwb5-6g.myshopify.com --theme 145592877107 --only <変えたファイル>` (例: `--only config/settings_data.json --only templates/index.json`)
 - テーマエディタで変えたら: `shopify theme pull --store vuvwb5-6g.myshopify.com --theme 145592877107` で取り込んでコミット
 - プレビュー: `shopify theme dev --store vuvwb5-6g.myshopify.com` (http://127.0.0.1:9292) または管理画面のテーマ プレビュー (ストアはパスワード保護中)
 - push 先は公開中テーマ (Horizon) なので、`shopify theme push` の前に必ず `pull` して差分を確認する。`--only` で対象ファイルを絞る
