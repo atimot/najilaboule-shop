@@ -56,6 +56,23 @@
 - ファビコン (2026-09-24): 9 色の丸アイコン (`najilaboule-favicon-512.png`、512×512、地色 #231816 のまま。透明にすると白地のタブで白・黄、黒地のタブで黒・紫の丸が消える)。Horizon は 32×32 でしか出力しない
 - ロゴ・ファビコンの元画像と生成スクリプトは `~/work/najilaboule-tmp/01_logo/shopify/`。ストアの「ファイル」にあり、設定値は `shopify://shop_images/<ファイル名>`。ファイル名が `icon` などで終わると Shopify が名前に識別子を足すので避ける
 
+## 商品 (2026-09-24 登録)
+
+2026 年度販売計画 (`~/work/najilaboule-tmp/2026年度販売計画.pdf`) の 3 プランを商品として登録した (Admin API の `productCreate`。テーマではなくストアのデータなので、このリポジトリには入らない)。
+
+| プラン | ハンドル | 商品 ID | 税込価格 | SKU |
+|---|---|---|---|---|
+| 初回販売 (〜11/30。新之助 5kg ＋ きたりえカレー 2 個) | `shinnosuke-5kg-kitarie-curry-set` | 7982710358067 | 6,480 円 | NJ-SHIN-5KG-CURRY |
+| 新春セール・1 年契約 (12/1〜12/31。5kg × 12 袋、2 か月分無料) | `shinnosuke-5kg-12bags-annual` | 7982710456371 | 64,800 円 | NJ-SHIN-5KG-12 |
+| レギュラー (12/1〜。5kg) | `shinnosuke-5kg` | 7982710554675 | 6,480 円 | NJ-SHIN-5KG |
+
+- ストアは税込表示 (`shop.taxesIncluded = true`) なので、計画の税抜 6,000 円 / 60,000 円に軽減税率 8% を乗せた税込価格で登録した。ストア側の税率設定 (8% の上書き) は未確認
+- 1 年契約は定期購入アプリを使わず、12 袋分を一括払いする通常商品として登録 (毎月の発送は運用で行う)
+- 申込期間の開始・終了は自動化していない。3 商品とも公開中 (ストアはパスワード保護中)。12/1 公開にするなら管理画面の「公開日時を設定」か `publishablePublish` の `publishDate`
+- 在庫は追跡しない (`tracked: false`)。送料込み (沖縄・離島 +1,000 円) は配送設定側で行う (未設定)
+- 画像は `~/work/najilaboule-tmp/07_rice` `08_curry` から。商品カードの縦横比 (`image_ratio: adapt`) を揃えるため、主画像は 4:3 に切り抜いた
+- 旧テスト商品 3 点 (`銀座 Naji la boule の米 ― ギフト 300g / お試し 1kg / 家庭用 5kg`、2026-05-26 作成) は同日ユーザー指示で削除した。商品はこの 3 点だけ
+
 ## 開発フロー
 
 - 設定を変えたら: `shopify theme push --store vuvwb5-6g.myshopify.com --theme 145592877107 --only <変えたファイル>` (例: `--only config/settings_data.json --only templates/index.json`)
