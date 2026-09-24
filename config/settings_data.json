@@ -16,7 +16,7 @@
     "page_text_color": "{{ settings.color_palette.foreground }}",
     "type_body_font": "noto_serif_japanese_n5",
     "type_subheading_font": "noto_serif_japanese_n5",
-    "type_heading_font": "noto_serif_japanese_n6",
+    "type_heading_font": "noto_serif_japanese_n5",
     "type_accent_font": "noto_serif_japanese_n5",
     "type_size_paragraph": "16",
     "type_line_height_paragraph": "body-loose",
