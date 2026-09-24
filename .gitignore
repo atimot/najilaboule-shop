@@ -23,4 +23,3 @@ Thumbs.db
 
 # Claude Code (共有: settings.json / 個人ローカル設定は除外)
 .claude/settings.local.json
-.impeccable/
