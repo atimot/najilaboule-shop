@@ -1,7 +1,7 @@
 # Najilaboule Shop (Shopify Theme)
 
 自社の和食店ブランド「Naji la boule」のお米を販売する EC サイト用 Shopify テーマ。
-ベースは Shopify 公式テーマ **Horizon 4.1.5** (Theme Store 版)。LP (https://atimot.github.io/najilaboule/) の世界観のうち **色だけ** を継承する (フォントは 2026-09-24 から LP と別。下記)。LP の構造 (店舗紹介・予約導線) は継承しない。
+ベースは Shopify 公式テーマ **Horizon 4.1.5** (Theme Store 版)。LP (https://atimot.github.io/najilaboule/) とは **色もフォントも共有しない** (2026-09-24 決定。ブラウンの暗い配色は EC には重いため、ショップ独自の「白 × 墨 × 稲穂の金」に切り替えた)。LP の構造 (店舗紹介・予約導線) も継承しない。
 
 - ストア (管理画面ハンドル): `najilaboule` (admin.shopify.com/store/najilaboule)
 - 永続ドメイン: `vuvwb5-6g.myshopify.com` ← CLI 認証・Admin API はこちら (`najilaboule.myshopify.com` は別名。OAuth コールバック不一致でエラーになる)
@@ -19,7 +19,7 @@
 
 ## デザイン決め事
 
-色の正 (source of truth) は LP リポジトリの `/Users/tomitad/work/najilaboule/DESIGN.md`。
+デザインの正 (source of truth) はこの CLAUDE.md の「デザイン決め事」。LP の `DESIGN.md` は参照しない。
 
 **触ってよいのは設定データだけ** (どれもテーマエディタが書き込むのと同じ JSON):
 
@@ -32,23 +32,25 @@
 
 `sections/` `blocks/` `snippets/` `assets/` `layout/` の Liquid / CSS / JS 本体は **編集しない** (Theme Store の更新に追従できなくなるため)。
 
-**トークン対応 (DESIGN.md → Horizon カラーパレット):**
+**カラーパレット (白 × 墨 × 稲穂の金。2026-09-24〜):**
 
-| パレットキー | 値 | DESIGN.md |
+| パレットキー | 値 | 役割 |
 |---|---|---|
-| background | #241816 | brand |
-| foreground | #f8f8f8 | text |
-| accent | #c8a67b | accent (金。セールバッジのみ) |
-| muted | #99a1af | text-muted |
-| surface | #2a1d1b | brand-light (filled ボタンの地) |
-| color1 | #1f1513 | brand-dark (フッター背景) |
-| color2 | #504645 | line (白 20% を brand に重ねた実色) |
+| background | #ffffff | ページ・ヘッダー・入力欄・カートの地 |
+| foreground | #1f1f1f | 墨。文字、主ボタンの地、選択中バリエーションの地 |
+| accent | #b8975a | 稲穂の金。セールバッジの地のみ (文字には使わない: 白地に 2.8:1 で読めない) |
+| muted | #6b6b6b | 薄い文字 (価格など)、売り切れバッジの文字 |
+| surface | #f5f2ec | ごく薄い生成り。副ボタンの地 |
+| color1 | #1f1f1f | フッターの地 (文字色はテーマが自動で白にする) |
+| color2 | #d9d4cb | 罫線・枠線 |
+
+- ヒーロー (トップ) の見出しとボタンは写真の上なのでパレット参照ではなく白 `#ffffff` を直接指定している
 
 - フォント: 本文 / 小見出し / 見出し / アクセントの 4 か所すべてシステムフォントの `serif` (Web フォントを読み込まない)。参考サイト (八代目儀兵衛 銀座米料亭) の游明朝はライブラリに無いため、端末の標準明朝で代える。和文は Mac・iPhone ならヒラギノ明朝。欧文は Shopify のシステム serif 指定 (New York → Iowan Old Style → … → Times New Roman) で決まる
 - 字間: 見出し h1〜h6 は「広め」(0.03em)。本文の字間は設定が無いので標準のまま
 - 行間: 本文は「広め」(1.6)
 - 角丸はすべて 0、影なし、カードのホバー効果なし
-- ボタン: primary = 透明地・白文字・白 50% 枠 (`rgba(255,255,255,0.5)`)、secondary = 白 5% 地・line 枠。ホバー色は Horizon の自動計算に任せる
+- ボタン: primary = 墨で塗る (地 foreground・文字 background・枠 foreground)、secondary = surface 地・foreground 文字・color2 枠。ホバー色は Horizon の自動計算に任せる
 
 ## 開発フロー
 
