@@ -28,7 +28,7 @@
 
 設定できる項目・値・範囲は `config/settings_schema.json` と各セクション / ブロックの `{% schema %}` に定義されている。日本語の表示名は `locales/ja.schema.json`。
 
-**カスタム CSS は使わない** (2026-09-24 決定)。テーマ全体 (`platform_customizations.custom_css`) もセクション単位 (テンプレート JSON 内の `custom_css`) も同じ。テーマ設定の値を上書きして管理画面の設定が効かなくなるため。テーマ設定で表現できない見た目は、テーマ設定の範囲で近いものに寄せる。
+**カスタム CSS は書体の 1 ルールだけ** (2026-09-24 決定)。`platform_customizations.custom_css` に `:root` の書体変数 4 つ (`--font-body--family` `--font-subheading--family` `--font-heading--family` `--font-accent--family`) を游明朝に上書きするルールがあり、これ以外は足さない。セクション単位 (テンプレート JSON 内の `custom_css`) も使わない。理由: カスタム CSS はテーマ設定の値を上書きして管理画面の設定が効かなくなる。書体だけは游明朝がライブラリに無いので例外にした。テーマ設定で表現できない見た目は、テーマ設定の範囲で近いものに寄せる。
 
 `sections/` `blocks/` `snippets/` `assets/` `layout/` の Liquid / CSS / JS 本体は **編集しない** (Theme Store の更新に追従できなくなるため)。
 
@@ -46,7 +46,7 @@
 
 - ヒーロー (トップ) の見出しとボタンは写真の上なのでパレット参照ではなく白 `#ffffff` を直接指定している
 
-- フォント: 本文 / 小見出し / 見出し / アクセントの 4 か所すべてシステムフォントの `serif` (Web フォントを読み込まない)。参考サイト (八代目儀兵衛 銀座米料亭) の游明朝はライブラリに無いため、端末の標準明朝で代える。和文は Mac・iPhone ならヒラギノ明朝。欧文は Shopify のシステム serif 指定 (New York → Iowan Old Style → … → Times New Roman) で決まる
+- フォント: **游明朝** (参考サイト 八代目儀兵衛 銀座米料亭と同じ)。Web フォントは読み込まず、カスタム CSS で `"Yu Mincho", YuMincho, "Hiragino Mincho ProN", serif` を指定。Mac・Windows は游明朝、iPhone はヒラギノ明朝、Android は Noto Serif 系で表示される。テーマ設定の書体 4 か所は `serif` のままにしておく (CSS に上書きされるので値に意味は無いが、Web フォントを読み込ませないため)。ウェイトは 400 (Horizon の既定)
 - 字間: 見出し h1〜h6 は「広め」(0.03em)。本文の字間は設定が無いので標準のまま
 - 行間: 本文は「広め」(1.6)
 - 角丸はすべて 0、影なし、カードのホバー効果なし
