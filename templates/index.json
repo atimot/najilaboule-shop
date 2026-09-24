@@ -16,7 +16,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>銀座の一膳を、<br>ご家庭で。</p>",
+            "text": "<p>銀座の一膳を、</p><p>ご家庭で。</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "center",
@@ -188,11 +188,11 @@
           "static": true,
           "settings": {
             "product_card_gap": 4,
-            "background_color": "",
+            "background_color": "{{ settings.color_palette.surface }}",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
-            "border_color": "",
+            "border_color": "{{ settings.color_palette.color2 }}",
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -207,7 +207,7 @@
                 "image_ratio": "adapt",
                 "border": "none",
                 "border_width": 1,
-                "border_opacity": 100,
+                "border_opacity": 50,
                 "border_color": "",
                 "border_radius": 0,
                 "padding-block-start": 0,
@@ -235,10 +235,10 @@
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-block-start": 8,
+                "padding-block-end": 8,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
               },
               "blocks": {}
             },
@@ -259,9 +259,9 @@
                 "case": "none",
                 "text_color": "",
                 "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-block-end": 8,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
               },
               "blocks": {}
             }

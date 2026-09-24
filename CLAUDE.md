@@ -56,6 +56,14 @@
 - ファビコン (2026-09-24): 9 色の丸アイコン (`najilaboule-favicon-512.png`、512×512、地色 #231816 のまま。透明にすると白地のタブで白・黄、黒地のタブで黒・紫の丸が消える)。Horizon は 32×32 でしか出力しない
 - ロゴ・ファビコンの元画像と生成スクリプトは `~/work/najilaboule-tmp/01_logo/shopify/`。ストアの「ファイル」にあり、設定値は `shopify://shop_images/<ファイル名>`。ファイル名が `icon` などで終わると Shopify が名前に識別子を足すので避ける
 
+**2026-09-24 テーマエディタでの調整 (ユーザー設定。`shopify theme pull` で取り込み):**
+
+- 商品ページ: ギャラリーは **1 列** (`media_columns: one`)、画像ズームなし (`zoom: false`)。「You may also like」(product-recommendations) セクションは **非表示** (`disabled: true`)
+- トップの商品カード: 地を surface、枠色 color2 (枠線自体は none のまま)、カード画像の枠の不透明度 50%、商品名・価格の内側余白 8px
+- フッター (footer-utilities): 上の罫線なし (`divider_thickness: 0`)。地は foreground 参照 (color1 と同じ #1f1f1f)
+- ヒーローの見出しは `<br>` ではなく 2 つの `<p>` (エディタが書き換えた形。見た目は同じ)
+- 同日、Claude が提案した商品ページの変更一式 (詳細列の surface 地・正方形ギャラリー・アコーディオン等) は不採用で全て戻した。再提案しない
+
 ## 商品 (2026-09-24 登録)
 
 2026 年度販売計画 (`~/work/najilaboule-tmp/2026年度販売計画.pdf`) の 3 プランを商品として登録した (Admin API の `productCreate`。テーマではなくストアのデータなので、このリポジトリには入らない)。
