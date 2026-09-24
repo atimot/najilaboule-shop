@@ -58,3 +58,4 @@
 - テーマエディタで変えたら: `shopify theme pull --store vuvwb5-6g.myshopify.com --theme 145592877107` で取り込んでコミット
 - プレビュー: `shopify theme dev --store vuvwb5-6g.myshopify.com` (http://127.0.0.1:9292) または管理画面のテーマ プレビュー (ストアはパスワード保護中)
 - push 先は公開中テーマ (Horizon) なので、`shopify theme push` の前に必ず `pull` して差分を確認する。`--only` で対象ファイルを絞る
+- コミットしたら `main` に取り込み (fast-forward) GitHub に push するところまで進める (2026-09-24 ユーザー承認。毎回の確認は不要)
