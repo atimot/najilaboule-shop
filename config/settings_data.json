@@ -226,8 +226,8 @@
   },
   "platform_customizations": {
     "custom_css": [
-      "/* 書体だけの例外: 游明朝は Shopify のフォントライブラリに無いため CSS で指定する (2026-09-24 決定)。テーマ設定の書体 4 か所は効かなくなる */",
-      ":root { --font-body--family: \"Yu Mincho\", YuMincho, \"Hiragino Mincho ProN\", serif; --font-subheading--family: \"Yu Mincho\", YuMincho, \"Hiragino Mincho ProN\", serif; --font-heading--family: \"Yu Mincho\", YuMincho, \"Hiragino Mincho ProN\", serif; --font-accent--family: \"Yu Mincho\", YuMincho, \"Hiragino Mincho ProN\", serif; }"
+      "/* 書体だけの例外: 游明朝は Shopify のフォントライブラリに無いため CSS で指定する (2026-09-24 決定)。太さは 500 (Mac は游明朝 Medium、Windows は Medium が無いので Regular)。テーマ設定の書体 4 か所は効かなくなる */",
+      ":root { --font-body--family: \"Yu Mincho\", YuMincho, \"Hiragino Mincho ProN\", serif; --font-subheading--family: \"Yu Mincho\", YuMincho, \"Hiragino Mincho ProN\", serif; --font-heading--family: \"Yu Mincho\", YuMincho, \"Hiragino Mincho ProN\", serif; --font-accent--family: \"Yu Mincho\", YuMincho, \"Hiragino Mincho ProN\", serif; --font-body--weight: 500; --font-subheading--weight: 500; --font-heading--weight: 500; --font-accent--weight: 500; --font-paragraph--weight: 500; }"
     ]
   }
 }
