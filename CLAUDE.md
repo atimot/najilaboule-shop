@@ -5,6 +5,7 @@
 
 - ストア (管理画面ハンドル): `najilaboule` (admin.shopify.com/store/najilaboule)
 - 永続ドメイン: `vuvwb5-6g.myshopify.com` ← CLI 認証・Admin API はこちら (`najilaboule.myshopify.com` は別名。OAuth コールバック不一致でエラーになる)
+- 独自ドメイン (プライマリ): **`shop.najilaboule.com`** (2026-09-25 接続。Cloudflare の `najilaboule.com` ゾーンに CNAME `shop` → `shops.myshopify.com` を **DNS only** で登録。Shopify は Cloudflare プロキシ非対応なのでオレンジ雲にしない。TLS 発行 (約 5 分) 後に Shopify が自動でプライマリにし、myshopify の 2 ドメインは 301 で転送される。所有確認の TXT は不要だった。apex と www は LP (GitHub Pages) のまま)
 - 公開: **2026-09-12 に Horizon を公開済み** (当初予定は 2026-10-01。ストアは引き続きパスワード保護中)
 
 ## テーマとブランチの対応 (2026-09-12 公開後)
