@@ -82,10 +82,51 @@
 - 画像は `~/work/najilaboule-tmp/07_rice` `08_curry` から。商品カードの縦横比 (`image_ratio: adapt`) を揃えるため、主画像は 4:3 に切り抜いた
 - 旧テスト商品 3 点 (`銀座 Naji la boule の米 ― ギフト 300g / お試し 1kg / 家庭用 5kg`、2026-05-26 作成) は同日ユーザー指示で削除した。商品はこの 3 点だけ
 
+## ページと導線 (2026-09-25 整理)
+
+商品 3 点のショップなので使うページを絞り、使わないものは導線 (ヘッダー・フッター・メニュー) から外した。URL 自体は Shopify の仕様で残る (リンクしなければ辿り着けない)。
+
+**使うページ:**
+
+| ページ | URL | 中身の置き場 | 導線 |
+|---|---|---|---|
+| トップ | `/` | `templates/index.json` | ロゴ |
+| 商品 (3 点) | `/products/<handle>` | 商品管理 | トップの商品一覧、全商品ページ |
+| 全商品 | `/collections/all` | 自動生成 (コレクションは作らない) | ヘッダーメニュー「商品一覧」 |
+| お問い合わせ | `/pages/contact` | ページ ID 154988380211 (テンプレート `page.contact`、フォーム付き) | ヘッダーメニュー「お問い合わせ」 |
+| カート | ドロワー (`/cart`) | 自動 | ヘッダーのカートアイコン |
+| チェックアウト | Shopify ホスト | 設定 > チェックアウト | カート |
+| 特定商取引法に基づく表記 | `/policies/legal-notice` | 設定 > ポリシー | フッターのポリシー一覧 (本文があるものが自動で並ぶ) |
+| プライバシーポリシー | `/policies/privacy-policy` | 設定 > ポリシー | 同上 |
+| 配送ポリシー | `/policies/shipping-policy` | 設定 > ポリシー (2026-09-25 新規) | 同上 |
+| 返金ポリシー | `/policies/refund-policy` | 設定 > ポリシー (2026-09-25 新規) | 同上 |
+
+**使わないページ・機能 (導線から外した):**
+
+- 検索: ヘッダーの検索アイコンを OFF (`show_search: false`)。`/search` は残るがリンクしない
+- コレクション: 作らない。自動生成の `/collections/all` だけ使う。`/collections` (コレクション一覧) もリンクしない
+- ブログ: 作らない
+- 顧客アカウント: ログインリンクを非表示 (設定 > お客様アカウント > ログインリンクの表示 OFF)。ゲスト購入のみ
+- SNS リンク: フッターの social-links ブロックを削除 (Horizon 初期値の facebook.com 等のダミー URL だった)
+- 国・言語セレクタ: OFF (`show_country` / `show_language: false`。もともと 1 つずつなので表示されていなかった)
+- フッターメニュー (`footer`、項目「検索」のみ): Horizon のフッターが参照していないので未使用
+- 利用規約: 作らない。1 年契約の条件 (一括払い・途中解約不可・お届け先変更) は特商法と配送・返金ポリシーに書いた
+
+**メニュー (ストアのデータ。管理画面「オンラインストア > メニュー」):**
+
+- メインメニュー (`main-menu`、ID 219581349939): 「商品一覧」(CATALOG → `/collections/all`)、「お問い合わせ」(PAGE)。初期値の「ホーム」は削除 (ロゴが兼ねる)。テーマ側はヘッダーの `_header-menu` ブロックが `main-menu` を参照しているだけ
+
+**ポリシー (ストアのデータ。控えは `docs/policies/`):**
+
+- 書き込みは CLI: `shopify store execute --allow-mutations` で `shopPolicyUpdate` (変数は `--variable-file`)。コネクタでは書けない
+- **未記入 (公開前に必須)**: 特商法の [氏名] [郵便番号] [住所] [電話番号]。メールアドレスは個人 Gmail のままなので会社のアドレスに差し替える
+- **仮置き (要確認)**: 注文確定後のキャンセル不可、1 年契約の途中解約・返金不可、お届け先変更はフォーム連絡 (締切なし)。決済手段の表記 (Shop Pay / Apple Pay / Google Pay) は有効な手段に合わせる。沖縄・離島 +1,000 円は本文に書いたが配送設定 (料金) は未設定
+
 ## 開発フロー
 
-- 設定を変えたら: `shopify theme push --store vuvwb5-6g.myshopify.com --theme 145592877107 --only <変えたファイル>` (例: `--only config/settings_data.json --only templates/index.json`)
+- 設定を変えたら: `shopify theme push --store vuvwb5-6g.myshopify.com --theme 145592877107 --allow-live --only <変えたファイル>` (例: `--only config/settings_data.json --only templates/index.json`)。`--allow-live` が無いと公開中テーマへの確認プロンプトで止まる (非対話だと無言で待つ)
 - テーマエディタで変えたら: `shopify theme pull --store vuvwb5-6g.myshopify.com --theme 145592877107` で取り込んでコミット
 - プレビュー: `shopify theme dev --store vuvwb5-6g.myshopify.com` (http://127.0.0.1:9292) または管理画面のテーマ プレビュー (ストアはパスワード保護中)
-- push 先は公開中テーマ (Horizon) なので、`shopify theme push` の前に必ず `pull` して差分を確認する。`--only` で対象ファイルを絞る
+- push 先は公開中テーマ (Horizon) なので、`shopify theme push` の前に必ず `pull` して差分を確認する。`--only` で対象ファイルを絞る。pull は未コミットの変更があると確認で止まるので、先にコミットしてから `pull --only <同じファイル>` し、`git diff` でエディタ側の変更を見る
+- ストア操作の CLI 認証 (`shopify store auth`) のスコープ: products / publications / files / legal_policies / online_store_navigation / online_store_pages の read・write (2026-09-25 時点)
 - コミットしたら `main` に取り込み (fast-forward) GitHub に push するところまで進める (2026-09-24 ユーザー承認。毎回の確認は不要)
