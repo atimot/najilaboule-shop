@@ -29,7 +29,7 @@
 
 設定できる項目・値・範囲は `config/settings_schema.json` と各セクション / ブロックの `{% schema %}` に定義されている。日本語の表示名は `locales/ja.schema.json`。
 
-**カスタム CSS は使わない** (2026-09-24 決定)。テーマ全体 (`platform_customizations.custom_css`) もセクション単位 (テンプレート JSON 内の `custom_css`) も同じ。理由: テーマ設定の値を上書きして管理画面の設定が効かなくなる。同日に游明朝のため書体だけ例外にしたが、ライブラリの Noto Serif Japanese に切り替えて例外も無くした。テーマ設定で表現できない見た目は、テーマ設定の範囲で近いものに寄せる。
+**カスタム CSS は使わない** (2026-09-24 決定)。テーマ全体 (`platform_customizations.custom_css`) もセクション単位 (テンプレート JSON 内の `custom_css`) も同じ。理由: テーマ設定の値を上書きして管理画面の設定が効かなくなる。同日に游明朝のため書体だけ例外にしたが、ライブラリの Noto Serif Japanese に切り替えて例外も無くした。テーマ設定で表現できない見た目は、テーマ設定の範囲で近いものに寄せる。**唯一の例外 (2026-09-26)**: お問い合わせフォームの「電話」欄の非表示。電話欄は `blocks/contact-form.liquid` に直書きで切り替え設定が無く (上流 Horizon の main も同じ)、Liquid を編集すると Theme Store の更新に追従できなくなるため、`templates/page.contact.json` の form セクションに `custom_css` (`#ContactForm-phone` とそのラベルを `display: none`) を置いた。テーマ設定の値は何も上書きしていない。Horizon が電話欄の切り替え設定を追加したら、それに置き換えて例外を無くす。
 
 `sections/` `blocks/` `snippets/` `assets/` `layout/` の Liquid / CSS / JS 本体は **編集しない** (Theme Store の更新に追従できなくなるため)。
 
@@ -93,7 +93,7 @@
 | トップ | `/` | `templates/index.json` | ロゴ |
 | 商品 (3 点) | `/products/<handle>` | 商品管理 | トップの商品一覧、全商品ページ |
 | 全商品 | `/collections/all` | 自動生成 (コレクションは作らない) | ヘッダーメニュー「商品一覧」 |
-| お問い合わせ | `/pages/contact` | ページ ID 154988380211 (テンプレート `page.contact`、フォーム付き) | ヘッダーメニュー「お問い合わせ」 |
+| お問い合わせ | `/pages/contact` | ページ ID 154988380211 (テンプレート `page.contact`、フォーム付き。項目は名前・メールアドレス・コメントの 3 つ。電話欄は 2026-09-26 に custom_css で非表示。上記「デザイン決め事」の例外参照) | ヘッダーメニュー「お問い合わせ」 |
 | カート | ドロワー (`/cart`) | 自動 | ヘッダーのカートアイコン |
 | チェックアウト | Shopify ホスト | 設定 > チェックアウト | カート |
 | 特定商取引法に基づく表記 | `/policies/legal-notice` | 設定 > ポリシー | フッターのポリシー一覧 (本文があるものが自動で並ぶ) |

@@ -135,7 +135,11 @@
         "gradient_direction": "to top",
         "padding-block-start": 32,
         "padding-block-end": 84
-      }
+      },
+      "custom_css": [
+        "#ContactForm-phone { display: none; }",
+        "label[for=\"ContactForm-phone\"] { display: none; }"
+      ]
     }
   },
   "order": [
