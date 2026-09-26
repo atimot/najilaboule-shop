@@ -1,0 +1,80 @@
+{% comment %}
+  適格簡易請求書 (インボイス) 欄。注文確認メール (設定 > 通知 > お客様への通知 > 注文の確認) の本文で、
+  フッター `<table class="row footer">` の直前に挿入してある。2026-09-26 作成・反映。
+  - 税率の判定は各明細の tax_lines (8% 未満 = 軽減税率、それ以外 = 標準税率、税率なし = 対象外)
+  - 送料には課税していない (taxShipping = false) ので、送料は税率別集計に入れず別行で表示する。
+    送料に課税するよう変えたら、送料を標準税率 10% の集計に足すこと
+{% endcomment %}
+{% assign inv_reduced_total = 0 %}
+{% assign inv_standard_total = 0 %}
+{% assign inv_exempt_total = 0 %}
+{% assign inv_reduced_tax = 0 %}
+{% assign inv_standard_tax = 0 %}
+{% assign inv_reduced_titles = "" %}
+{% for line in line_items %}
+  {% assign inv_line_rate = 0 %}
+  {% for inv_tax in line.tax_lines %}
+    {% if inv_tax.rate > inv_line_rate %}{% assign inv_line_rate = inv_tax.rate %}{% endif %}
+  {% endfor %}
+  {% if inv_line_rate == 0 %}
+    {% assign inv_exempt_total = inv_exempt_total | plus: line.final_line_price %}
+  {% elsif inv_line_rate < 0.1 %}
+    {% assign inv_reduced_total = inv_reduced_total | plus: line.final_line_price %}
+    {% assign inv_reduced_titles = inv_reduced_titles | append: "|" | append: line.title %}
+  {% else %}
+    {% assign inv_standard_total = inv_standard_total | plus: line.final_line_price %}
+  {% endif %}
+{% endfor %}
+{% for inv_tax in tax_lines %}
+  {% if inv_tax.rate < 0.1 %}
+    {% assign inv_reduced_tax = inv_reduced_tax | plus: inv_tax.price %}
+  {% else %}
+    {% assign inv_standard_tax = inv_standard_tax | plus: inv_tax.price %}
+  {% endif %}
+{% endfor %}
+{% assign inv_date = created_at | default: order.created_at | default: "now" %}
+<table class="row section">
+<tr>
+<td class="section__cell">
+<center>
+<table class="container">
+<tr>
+<td>
+<h3>適格簡易請求書</h3>
+</td>
+</tr>
+</table>
+<table class="container">
+<tr>
+<td>
+<table class="row subtotal-table">
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>発行事業者</span></p></td><td class="subtotal-line__value"><strong>株式会社源屋創助</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>登録番号</span></p></td><td class="subtotal-line__value"><strong>T8010401107641</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>取引年月日</span></p></td><td class="subtotal-line__value"><strong>{{ inv_date | date: "%Y年%m月%d日" }}</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>注文番号</span></p></td><td class="subtotal-line__value"><strong>{{ order_name }}</strong></td></tr>
+<tr><td colspan="2" class="subtotal-table__line"></td></tr>
+{% if inv_reduced_total > 0 %}
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>軽減税率 8% 対象 (税込)</span></p></td><td class="subtotal-line__value"><strong>{{ inv_reduced_total | money }}</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>うち消費税 (8%)</span></p></td><td class="subtotal-line__value"><strong>{{ inv_reduced_tax | money }}</strong></td></tr>
+{% endif %}
+{% if inv_standard_total > 0 %}
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>標準税率 10% 対象 (税込)</span></p></td><td class="subtotal-line__value"><strong>{{ inv_standard_total | money }}</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>うち消費税 (10%)</span></p></td><td class="subtotal-line__value"><strong>{{ inv_standard_tax | money }}</strong></td></tr>
+{% endif %}
+{% if inv_exempt_total > 0 %}
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>消費税対象外</span></p></td><td class="subtotal-line__value"><strong>{{ inv_exempt_total | money }}</strong></td></tr>
+{% endif %}
+{% if shipping_price > 0 %}
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>送料</span></p></td><td class="subtotal-line__value"><strong>{{ shipping_price | money }}</strong></td></tr>
+{% endif %}
+</table>
+{% if inv_reduced_total > 0 %}
+<p class="disclaimer__subtext">{% if inv_standard_total > 0 or inv_exempt_total > 0 %}※軽減税率 (8%) 対象品目: {{ inv_reduced_titles | remove_first: "|" | split: "|" | join: "、" }}{% else %}※本注文の商品はすべて軽減税率 (8%) の対象品目です{% endif %}</p>
+{% endif %}
+</td>
+</tr>
+</table>
+</center>
+</td>
+</tr>
+</table>
