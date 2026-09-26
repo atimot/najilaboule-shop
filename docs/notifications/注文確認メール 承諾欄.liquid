@@ -1,0 +1,46 @@
+{% comment %}
+  ご注文の承諾について (特商法 13 条 前払式通信販売の承諾等の通知)。注文確認メール (設定 > 通知 > お客様への通知 > 注文の確認) の本文で、
+  「適格簡易請求書」欄の直前 (インボイス欄の先頭の comment タグの手前) に挿入してある。Liquid のコメント内に comment タグを書くと入れ子になって壊れるので書かない。2026-09-26 作成・反映。
+  - 住所・電話番号・メールアドレスは 設定 > ストアの詳細 (shop.address / shop.phone / shop.email) から出す。直書きしない
+  - 引渡時期は配送方法名 (配送プロフィール「予約販売」の名前に入れてある) の全角括弧の中を出す。
+    括弧が無い配送方法 (通常出荷) は「ご注文確定後 1 週間程度」(ポリシーの既定と同じ)
+  - 受領金額・受領日は支払い待ちでない (has_pending_payment が偽。既定テンプレートも使う変数) ときだけ書く。カード・ウォレット決済は注文時に自動キャプチャなので実注文はこちら
+{% endcomment %}
+{% assign ack_delivery = "ご注文確定後 1 週間程度で発送いたします" %}
+{% if shipping_method and shipping_method.title contains "（" %}
+  {% assign ack_delivery = shipping_method.title | split: "（" | last | remove: "）" %}
+{% endif %}
+{% assign ack_date = created_at | default: order.created_at | default: "now" %}
+<table class="row section">
+<tr>
+<td class="section__cell">
+<center>
+<table class="container">
+<tr>
+<td>
+<h3>ご注文の承諾について</h3>
+{% unless has_pending_payment %}
+<p>上記のご注文を承りました。代金 {{ total_price | money }} を {{ ack_date | date: "%Y年%m月%d日" }} に受領いたしました。</p>
+{% else %}
+<p>上記のご注文を承りました。お支払いの確認後、下記の時期に発送いたします。</p>
+{% endunless %}
+</td>
+</tr>
+</table>
+<table class="container">
+<tr>
+<td>
+<table class="row subtotal-table">
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>販売業者</span></p></td><td class="subtotal-line__value"><strong>株式会社源屋創助</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>所在地</span></p></td><td class="subtotal-line__value"><strong>〒{{ shop.address.zip }} {{ shop.address.province }}{{ shop.address.city }}{{ shop.address.address1 }} {{ shop.address.address2 }}</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>電話番号</span></p></td><td class="subtotal-line__value"><strong>{{ shop.phone }}</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>メールアドレス</span></p></td><td class="subtotal-line__value"><strong>{{ shop.email }}</strong></td></tr>
+<tr class="subtotal-line"><td class="subtotal-line__title"><p><span>お届け時期</span></p></td><td class="subtotal-line__value"><strong>{{ ack_delivery }}</strong></td></tr>
+</table>
+</td>
+</tr>
+</table>
+</center>
+</td>
+</tr>
+</table>
