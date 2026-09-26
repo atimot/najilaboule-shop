@@ -78,7 +78,7 @@
 - 税率: 日本の基本税率は **8%** (Manual Tax。2026-09-26 に管理画面「設定 > 税金と関税 > 日本」で確認。都道府県は 0%、税の優先適用 (上書き) なし)。注文の消費税はこの 8% で内訳計算される (`draftOrderCalculate` で確認: 5,300 円 → 消費税 393 円)。税率用のコレクションは不要なので作らない (同日いったん作って削除した)
 - **新春セール・1 年契約** (`shinnosuke-5kg-12bags-annual`、ID 7982710456371、64,800 円、SKU NJ-SHIN-5KG-12。12 袋分を一括払いする通常商品として登録していた) は **2026-09-26 にユーザー指示で削除した** (`productDelete`)。テーマ側にこの商品への参照は無かった。ポリシーの「複数回に分けてお届けする商品」の条文は一般名なのでそのまま
 - 申込期間の開始・終了は自動化していない。2 商品とも公開中 (ストアはパスワード保護中)。12/1 公開にするなら管理画面の「公開日時を設定」か `publishablePublish` の `publishDate`
-- 在庫は追跡しない (`tracked: false`)。送料は全国送料込み・沖縄県のみ +1,200 円 (下記「配送」。2026-09-26 設定済み)
+- 在庫は **追跡する** (2026-09-26 に ON。ロケーション「新潟オフィス」1 か所。初期在庫は初回販売セット 500 袋・レギュラー 4,000 袋 (ユーザー指定))。品切れ時は販売停止 (`inventoryPolicy: DENY`。在庫 0 で購入ボタンが「売り切れ」になり、商品カードに売り切れバッジが出る。Horizon 標準なのでテーマ側の変更なし)。2 商品は別々に数える (セットが売れてもレギュラーは減らない)。商品ページの「残りわずか」表示 (`product-inventory` ブロック) は入れていない。在庫数は管理画面の「商品 > 在庫」か、下記「開発フロー」の `inventorySetQuantities` で変える。送料は全国送料込み・沖縄県のみ +1,200 円 (下記「配送」。2026-09-26 設定済み)
 - 画像は `~/work/najilaboule-tmp/07_rice` `08_curry` から。商品カードの縦横比 (`image_ratio: adapt`) を揃えるため、主画像は 4:3 に切り抜いた
 - 旧テスト商品 3 点 (`銀座 Naji la boule の米 ― ギフト 300g / お試し 1kg / 家庭用 5kg`、2026-05-26 作成) は同日ユーザー指示で削除した。商品は上の 2 点だけ
 
@@ -151,8 +151,8 @@
 | 設定 > ロケーション (`locations`) | 発送元。配送プロフィールの発送元、梱包明細 (納品書) の `shop_address` に出る | 発送場所の住所 |
 | 特商法の [住所] (ポリシー) | 販売業者の所在地 (法定記載) | 会社の住所 |
 
-- ロケーションは 1 つ (ID 75946819635。名前は住所から自動生成された「1-6-4」、`fulfillsOnlineOrders: true`)。住所は請求先住所と同じで、ストア作成時に入力したもの (会社の住所ではない可能性がある。要確認)
-- **未決定**: 会社の住所と発送場所の住所を確定し、上の表のとおりに入れる。発送元が 1 か所ならロケーションは増やさず既存を書き換える (名前も拠点名に変える)。ロケーションの住所は店頭受取を使わない限りストアには表示されない
+- ロケーションは 1 つ (ID 75946819635。名前は「新潟オフィス」(2026-09-26 にユーザーが管理画面で変更。それまでは住所から自動生成の「1-6-4」)、`fulfillsOnlineOrders: true`)。住所は請求先住所と同じで、ストア作成時に入力したもの (会社の住所ではない可能性がある。要確認)
+- **未決定**: 会社の住所と発送場所の住所を確定し、上の表のとおりに入れる。発送元が 1 か所ならロケーションは増やさず既存を書き換える (名前は「新潟オフィス」に変更済み)。ロケーションの住所は店頭受取を使わない限りストアには表示されない
 - 配送業者の送り状の差出人 (返品時の返送先) は業者側のシステムで設定する。Shopify とは連動しない
 
 ## 通知メール (2026-09-26)
@@ -172,6 +172,7 @@
 - テーマエディタで変えたら: `shopify theme pull --store vuvwb5-6g.myshopify.com --theme 145592877107` で取り込んでコミット
 - プレビュー: `shopify theme dev --store vuvwb5-6g.myshopify.com` (http://127.0.0.1:9292) または管理画面のテーマ プレビュー (ストアはパスワード保護中)
 - push 先は公開中テーマ (Horizon) なので、`shopify theme push` の前に必ず `pull` して差分を確認する。`--only` で対象ファイルを絞る。pull は未コミットの変更があると確認で止まるので、先にコミットしてから `pull --only <同じファイル>` し、`git diff` でエディタ側の変更を見る
-- ストア操作の CLI 認証 (`shopify store auth`) のスコープ: products / publications / files / legal_policies / online_store_navigation / online_store_pages / shipping / draft_orders の read・write、locations の read (2026-09-26 時点。shipping・draft_orders・read_locations は同日追加)
+- ストア操作の CLI 認証 (`shopify store auth`) のスコープ: products / publications / files / legal_policies / online_store_navigation / online_store_pages / shipping / draft_orders / inventory の read・write、locations の read (2026-09-26 時点。shipping・draft_orders・read_locations・inventory は同日追加)。別セッションが `store auth` を再実行するとスコープが入れ替わる (2026-09-26 に read_inventory が消えていた) ので、スコープは差分でなく毎回全部を列挙する
+- 在庫数の変更は `inventorySetQuantities` (`name: "available"`、`reason: "received"` / `"correction"` など)。CLI が使う API バージョンでは各項目に `changeFromQuantity` (変更前の現在値。`inventoryItem.inventoryLevels.quantities(names: ["available"])` で取る) が必須で、ミューテーションのフィールドに `@idempotent(key: "<UUID>")` を付けないと拒否される (`ignoreCompareQuantity` は無い)。追跡の ON/OFF は `inventoryItemUpdate(id, input: { tracked })`。在庫の読み取りには read_inventory が要る
 - 税額・送料の動作確認は `draftOrderCalculate` (注文を作らずに計算だけする。住所の `provinceCode` は `JP-13` 形式) で行う。チェックアウト画面で確認する必要はない
 - コミットしたら `main` に取り込み (fast-forward) GitHub に push するところまで進める (2026-09-24 ユーザー承認。毎回の確認は不要)
