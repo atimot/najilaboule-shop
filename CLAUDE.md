@@ -141,12 +141,26 @@
 - 同じ内容を配送ポリシー・特商法の「送料」と、商品説明 3 点の「送料」に書いてある (2026-09-26 に 1,200 円へ更新済み)
 - 離島は Shopify 標準の配送エリアでは判定できない (都道府県単位のみ)。追加送料を取らないことにしたので対応不要
 
+## ロケーションと住所 (2026-09-26 確認)
+
+ストアのデータ (テーマではないのでこのリポジトリには入らない)。住所の設定は 3 か所あり、役割が違う:
+
+| 設定 | 役割 | 入れる住所 |
+|---|---|---|
+| 設定 > ストアの詳細 > 請求先住所 (`shop.billingAddress`) | Shopify からの請求書用。テーマの `shop.address` もこれ (Horizon は表示していない) | 会社の住所 |
+| 設定 > ロケーション (`locations`) | 発送元。配送プロフィールの発送元、梱包明細 (納品書) の `shop_address` に出る | 発送場所の住所 |
+| 特商法の [住所] (ポリシー) | 販売業者の所在地 (法定記載) | 会社の住所 |
+
+- ロケーションは 1 つ (ID 75946819635。名前は住所から自動生成された「1-6-4」、`fulfillsOnlineOrders: true`)。住所は請求先住所と同じで、ストア作成時に入力したもの (会社の住所ではない可能性がある。要確認)
+- **未決定**: 会社の住所と発送場所の住所を確定し、上の表のとおりに入れる。発送元が 1 か所ならロケーションは増やさず既存を書き換える (名前も拠点名に変える)。ロケーションの住所は店頭受取を使わない限りストアには表示されない
+- 配送業者の送り状の差出人 (返品時の返送先) は業者側のシステムで設定する。Shopify とは連動しない
+
 ## 開発フロー
 
 - 設定を変えたら: `shopify theme push --store vuvwb5-6g.myshopify.com --theme 145592877107 --allow-live --only <変えたファイル>` (例: `--only config/settings_data.json --only templates/index.json`)。`--allow-live` が無いと公開中テーマへの確認プロンプトで止まる (非対話だと無言で待つ)
 - テーマエディタで変えたら: `shopify theme pull --store vuvwb5-6g.myshopify.com --theme 145592877107` で取り込んでコミット
 - プレビュー: `shopify theme dev --store vuvwb5-6g.myshopify.com` (http://127.0.0.1:9292) または管理画面のテーマ プレビュー (ストアはパスワード保護中)
 - push 先は公開中テーマ (Horizon) なので、`shopify theme push` の前に必ず `pull` して差分を確認する。`--only` で対象ファイルを絞る。pull は未コミットの変更があると確認で止まるので、先にコミットしてから `pull --only <同じファイル>` し、`git diff` でエディタ側の変更を見る
-- ストア操作の CLI 認証 (`shopify store auth`) のスコープ: products / publications / files / legal_policies / online_store_navigation / online_store_pages / shipping / draft_orders の read・write (2026-09-26 時点。shipping と draft_orders は同日追加)
+- ストア操作の CLI 認証 (`shopify store auth`) のスコープ: products / publications / files / legal_policies / online_store_navigation / online_store_pages / shipping / draft_orders の read・write、locations の read (2026-09-26 時点。shipping・draft_orders・read_locations は同日追加)
 - 税額・送料の動作確認は `draftOrderCalculate` (注文を作らずに計算だけする。住所の `provinceCode` は `JP-13` 形式) で行う。チェックアウト画面で確認する必要はない
 - コミットしたら `main` に取り込み (fast-forward) GitHub に push するところまで進める (2026-09-24 ユーザー承認。毎回の確認は不要)
