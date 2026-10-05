@@ -16,11 +16,11 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>銀座の一膳を、</p><p>ご家庭で。</p>",
+            "text": "<p>ショップサイトオープンセール<br/>きたりえカレーとセットで<br/>銀座の一膳をお届けします。<br/><br/>※10月上旬の収穫となりますので、出荷は11月上旬から順次行います。<br/><br/>セット商品は数に限りがありますので、お早めのご購入をお願いします。</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "center",
-            "type_preset": "h2",
+            "type_preset": "h3",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "line_height": "normal",

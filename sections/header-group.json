@@ -93,9 +93,43 @@
         "collection_inverse_logo": false,
         "text_color_transparent_collection": ""
       }
+    },
+    "header_announcements_k6zz7Y": {
+      "type": "header-announcements",
+      "blocks": {
+        "announcement_rFCWXr": {
+          "type": "_announcement",
+          "settings": {
+            "text": "<strong>【ショップサイトオープンセール】</strong>きたりえカレーとセットで 銀座の一膳をお届けします。",
+            "link": "shopify://products/shinnosuke-5kg-kitarie-curry-set",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "weight": "",
+            "letter_spacing": "loose",
+            "case": "none",
+            "text_color": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_rFCWXr"
+      ],
+      "disabled": true,
+      "name": "t:names.announcement_bar",
+      "settings": {
+        "speed": 5,
+        "section_width": "page-width",
+        "background_color": "{{ settings.color_palette.color2 }}",
+        "divider_width": 0,
+        "divider_color": "",
+        "padding-block-start": 15,
+        "padding-block-end": 15
+      }
     }
   },
   "order": [
-    "header_section"
+    "header_section",
+    "header_announcements_k6zz7Y"
   ]
 }
